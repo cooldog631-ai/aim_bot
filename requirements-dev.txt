@@ -1,0 +1,15 @@
+# Development requirements
+-r requirements.txt
+
+# Interactive Python
+ipython==8.20.0
+jupyter==1.0.0
+
+# Code quality
+isort==5.13.2
+autopep8==2.0.4
+
+# Additional testing tools
+pytest-mock==3.12.0
+pytest-xdist==3.5.0
+faker==22.0.0
