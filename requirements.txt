@@ -10,6 +10,9 @@ aiogram==3.3.0  # альтернативная библиотека для Teleg
 # VK API
 vk-api==11.9.9
 
+# VK Max Messenger
+maxapi>=0.1.0  # VK Max Bot API
+
 # AI & ML
 openai==1.6.1
 anthropic==0.8.1

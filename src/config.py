@@ -13,8 +13,12 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     # Bot Configuration
+    messenger_type: Literal["telegram", "vkmax", "both"] = Field(
+        default="telegram", description="Which messenger to use (telegram, vkmax, or both)"
+    )
     telegram_bot_token: str = Field(default="", description="Telegram Bot API token")
-    vk_bot_token: str = Field(default="", description="VK Bot API token")
+    vk_bot_token: str = Field(default="", description="VK Bot API token (classic VK)")
+    vk_max_token: str = Field(default="", description="VK Max Bot API token")
 
     # AI Services
     openai_api_key: str = Field(default="", description="OpenAI API key")
