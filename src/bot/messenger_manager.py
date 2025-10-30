@@ -4,7 +4,7 @@ import asyncio
 from typing import List, Optional
 
 from src.bot.base_messenger import BaseMessenger
-from src.bot.telegram_bot import TelegramBot
+from src.bot.telegram_bot_adapter import TelegramBotAdapter
 from src.bot.unified_handlers import (
     handle_help_command,
     handle_start_command,
@@ -39,7 +39,7 @@ class MessengerManager:
             if self.settings.telegram_bot_token:
                 try:
                     logger.info("Initializing Telegram bot...")
-                    telegram_bot = TelegramBot()
+                    telegram_bot = TelegramBotAdapter()
                     messengers.append(telegram_bot)
                     logger.info("✅ Telegram bot initialized")
                 except Exception as e:
