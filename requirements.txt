@@ -47,7 +47,7 @@ loguru==0.7.2
 pytest==7.4.4
 pytest-asyncio==0.23.3
 pytest-cov==4.1.0
-httpx==0.26.0  # для тестирования FastAPI
+httpx~=0.25.2  # для тестирования FastAPI (совместимо с python-telegram-bot)
 
 # Development
 black==23.12.1
