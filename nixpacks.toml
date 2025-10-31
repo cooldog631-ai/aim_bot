@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["python3", "postgresql_16.dev", "gcc", "ffmpeg"]
+nixPkgs = ["python3", "postgresql_16.dev", "gcc", "ffmpeg-full", "pkg-config"]
 
 [phases.install]
 cmds = [
