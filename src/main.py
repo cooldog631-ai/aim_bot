@@ -1,49 +1,88 @@
-"""Main entry point for the AI Voice Reports Bot."""
+"""
+MVP: Простой Telegram бот для сбора голосовых отчётов
+Запускается на Railway без БД и AI - только базовый функционал
+"""
 
 import asyncio
-import sys
-from pathlib import Path
+import logging
+import os
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
 
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-from src.config import get_settings
-from src.utils.logger import setup_logger
+# Получаем токен из переменной окружения
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
-logger = setup_logger(__name__)
+if not BOT_TOKEN:
+    raise ValueError("❌ TELEGRAM_BOT_TOKEN не найден! Добавьте его в Railway Variables")
+
+# Создаём бота и диспетчер
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
+
+
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    """Обработчик команды /start"""
+    await message.answer(
+        "👋 Привет! Я бот для сбора голосовых отчётов.\n\n"
+        "📝 Отправь мне текстовое или голосовое сообщение, и я его обработаю!\n\n"
+        "Доступные команды:\n"
+        "/start - показать это сообщение\n"
+        "/help - помощь"
+    )
+
+
+@dp.message(Command("help"))
+async def cmd_help(message: types.Message):
+    """Обработчик команды /help"""
+    await message.answer(
+        "ℹ️ Это MVP-версия бота для сбора отчётов.\n\n"
+        "Сейчас бот просто принимает сообщения.\n"
+        "В будущем добавим:\n"
+        "- Распознавание голоса (Whisper)\n"
+        "- Валидацию через AI\n"
+        "- Сохранение в базу данных"
+    )
+
+
+@dp.message()
+async def handle_message(message: types.Message):
+    """Обработчик всех остальных сообщений"""
+    if message.voice:
+        await message.answer(
+            "🎤 Получил голосовое сообщение!\n"
+            f"Длительность: {message.voice.duration} сек\n\n"
+            "⚠️ Распознавание голоса пока не подключено (требует настройки FFmpeg)"
+        )
+    elif message.text:
+        await message.answer(
+            f"✅ Получил текстовое сообщение:\n\n\"{message.text}\"\n\n"
+            "В будущем здесь будет валидация через AI"
+        )
+    else:
+        await message.answer("⚠️ Пока я умею работать только с текстом и голосом")
 
 
 async def main():
-    """Main application entry point."""
-    # Import here to avoid circular imports
-    from src.bot.messenger_manager import MessengerManager
-    from src.database.session import init_db
+    """Запуск бота"""
+    logger.info("🚀 Запускаем бота...")
+    logger.info(f"✅ Токен найден: {BOT_TOKEN[:10]}...")
 
-    # Initialize database
     try:
-        logger.info("📊 Initializing database...")
-        await init_db()
-        logger.info("✅ Database initialized successfully")
+        # Удаляем старые updates и запускаем polling
+        await bot.delete_webhook(drop_pending_updates=True)
+        await dp.start_polling(bot)
     except Exception as e:
-        logger.error(f"❌ Failed to initialize database: {e}")
-        sys.exit(1)
-
-    # Start messenger(s)
-    try:
-        manager = MessengerManager()
-        await manager.start()
-
-    except KeyboardInterrupt:
-        logger.info("\n👋 Shutting down gracefully...")
-        if 'manager' in locals():
-            await manager.stop()
-    except Exception as e:
-        logger.error(f"❌ Fatal error: {e}", exc_info=True)
-        sys.exit(1)
+        logger.error(f"❌ Ошибка: {e}")
+        raise
 
 
 if __name__ == "__main__":
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        logger.info("\n👋 Goodbye!")
+        logger.info("👋 Бот остановлен")

@@ -1,56 +1,42 @@
-# Core
+# Core - МИНИМУМ ДЛЯ MVP
 python-dotenv==1.0.0
 pydantic==2.5.0
 pydantic-settings==2.1.0
 
 # Telegram Bot
-python-telegram-bot==20.7
-aiogram==3.3.0  # альтернативная библиотека для Telegram
-
-# VK API
-vk-api==11.9.9
-
-# VK Max Messenger
-maxapi>=0.1.0  # VK Max Bot API
-
-# AI & ML
-openai==1.6.1
-anthropic==0.8.1
-openai-whisper==20231117  # для локального Whisper
-faster-whisper==0.10.0  # более быстрая версия Whisper
-
-# Database
-sqlalchemy==2.0.25
-alembic==1.13.1  # для миграций
-psycopg2-binary==2.9.9  # PostgreSQL driver
-aiosqlite==0.19.0  # для async SQLite
-
-# Web Framework (для API и dashboard)
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
-python-multipart==0.0.6
-
-# Utils
-requests==2.31.0
-aiohttp==3.9.1
-python-dateutil==2.8.2
-pytz==2023.3
-
-# Data Processing
-pandas==2.1.4
-numpy==1.26.3
+aiogram==3.3.0
 
 # Logging
 loguru==0.7.2
 
-# Testing
-pytest==7.4.4
-pytest-asyncio==0.23.3
-pytest-cov==4.1.0
-httpx~=0.25.2  # для тестирования FastAPI (совместимо с python-telegram-bot)
+# === ВСЁ НИЖЕ ВРЕМЕННО ОТКЛЮЧЕНО ДЛЯ MVP ===
+# Добавим по мере необходимости после того как базовый бот заработает
 
-# Development
-black==23.12.1
-flake8==7.0.0
-mypy==1.8.0
-pre-commit==3.6.0
+# python-telegram-bot==20.7  # альтернатива aiogram
+# vk-api==11.9.9  # VK API
+# maxapi>=0.1.0  # VK Max Bot API
+# openai==1.6.1  # AI & ML
+# anthropic==0.8.1
+# openai-whisper==20231117  # требует FFmpeg
+# faster-whisper==0.10.0  # требует FFmpeg
+# sqlalchemy==2.0.25  # Database
+# alembic==1.13.1
+# psycopg2-binary==2.9.9
+# aiosqlite==0.19.0
+# fastapi==0.109.0  # Web Framework
+# uvicorn[standard]==0.27.0
+# python-multipart==0.0.6
+# requests==2.31.0  # Utils
+# aiohttp==3.9.1
+# python-dateutil==2.8.2
+# pytz==2023.3
+# pandas==2.1.4  # Data Processing
+# numpy==1.26.3
+# pytest==7.4.4  # Testing
+# pytest-asyncio==0.23.3
+# pytest-cov==4.1.0
+# httpx~=0.25.2
+# black==23.12.1  # Development
+# flake8==7.0.0
+# mypy==1.8.0
+# pre-commit==3.6.0
